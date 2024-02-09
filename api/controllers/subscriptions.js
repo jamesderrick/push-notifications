@@ -12,13 +12,15 @@ async function index(req, res) {
 
 async function create(req, res) {
     const sub = req.body;
+    sub.subscriptionId = crypto.randomBytes(16).toString("hex");
     if(sub.endpoint.search('wns2-ln2p.notify.windows.com') > -1) {
-        sub.subscriptionId = crypto.randomBytes(16).toString("hex");
         sub.agent = 'edge'
         sub.contactId = 3
-    } else {
-        sub.subscriptionId = crypto.randomBytes(16).toString("hex");
+    } else if (sub.endpoint.search('https://fcm.googleapis.com') > -1) {
         sub.agent = 'chrome'
+        sub.contactId = 2
+    } else {
+        sub.agent = 'safari'
         sub.contactId = 2
     }
 
