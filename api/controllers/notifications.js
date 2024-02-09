@@ -19,7 +19,7 @@ async function send(req, res) {
         }
 
         nudges.forEach(async (nudge) => {
-            const subscriptions = [await Subscription.getByContactId(nudge.recipient_id)];
+            const subscriptions = await Subscription.getByContactId(nudge.recipient_id);
             const contacts = await Contact.getByNudgeId(nudge.nudge_id);
 
             subscriptions.forEach(subscription => {       
