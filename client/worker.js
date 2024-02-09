@@ -18,7 +18,7 @@ const urlBase64ToUint8Array = base64String => {
 
 const saveSubscription = async (subscription) => {
     console.log(subscription)
-    const response = await fetch('http://localhost:5000/api/subscriptions/save', {
+    const response = await fetch('api/subscriptions/save', {
         method: 'POST',
         headers: { 'Content-Type': "application/json" },
         body: JSON.stringify(subscription)
@@ -29,7 +29,7 @@ const saveSubscription = async (subscription) => {
 
 const nudgeReceived = async (nudgeId) => {
     //console.log(nudgeId)
-    const response = await fetch('http://localhost:5000/api/nudges/received', {
+    const response = await fetch('api/nudges/received', {
         method: 'POST',
         headers: { 'Content-Type': "application/json" },
         body: JSON.stringify({nudgeId: nudgeId})
@@ -40,7 +40,7 @@ const nudgeReceived = async (nudgeId) => {
 
 const nudgeAcknowledged = async (nudgeId) => {
     //console.log(nudgeId)
-    const response = await fetch('http://localhost:5000/api/nudges/acknowledged', {
+    const response = await fetch('api/nudges/acknowledged', {
         method: 'POST',
         headers: { 'Content-Type': "application/json" },
         body: JSON.stringify({nudgeId: nudgeId})
@@ -69,7 +69,7 @@ self.addEventListener('push', async (e) => {
         icon: 'logo.png',
         data: notification.data
     })
-    const response = await fetch('http://localhost:5000/api/nudges/received', {
+    const response = await fetch('api/nudges/received', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },
         body: JSON.stringify({ nudgeId: notification.data.id })
@@ -79,7 +79,7 @@ self.addEventListener('push', async (e) => {
 
 self.addEventListener("notificationclick", async (e) => {
     console.log('notification clicked')
-    const response = await fetch('http://localhost:5000/api/nudges/acknowledged', {
+    const response = await fetch('api/nudges/acknowledged', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },
         body: JSON.stringify({ nudgeId: e.notification.data.id })
@@ -91,7 +91,7 @@ self.addEventListener("notificationclick", async (e) => {
 self.addEventListener("pushsubscriptionchange", event => {
     console.log('push subscription changed')
     event.waitUntil(
-      fetch('http://localhost:5000/api/subscription-change', {
+      fetch('api/subscription-change', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
