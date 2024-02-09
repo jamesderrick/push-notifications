@@ -1,12 +1,14 @@
 {
     "name": "Web Push Test",
     "short_name": "WebPushTest",
-    "start_url": "/",
     "display": "standalone",
-    "orientation": "portrait-primary",
+    "theme_color": "#00237b",  
+    "background_color": "#00237b",
     "icons": [
         {
-            "src": "logo.png"
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
         }
     ]
 }
