@@ -1,0 +1,12 @@
+{
+    "name": "Web Push Test",
+    "short_name": "WebPushTest",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "logo.png"
+        }
+    ]
+}
