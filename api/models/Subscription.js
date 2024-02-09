@@ -31,17 +31,20 @@ class Subscription {
 
     static getByContactId(contactId) {
         return new Promise((resolve) => {
-            db.get(
+            db.all(
                 `SELECT * FROM subscriptions WHERE contact_id = ?`,
                 [
                     contactId
                 ], 
-                (err, row) => {
+                (err, rows) => {
                     if (err) {
                         throw err;
                     }
-                    const subscription = new Subscription(row)
-                    resolve(subscription)
+                    const subscriptions = []
+                    rows.forEach(row => {
+                        subscriptions.push(new Subscription(row))
+                    })
+                    resolve(subscriptions)
                 }
             )
         }) 
