@@ -24,6 +24,8 @@ async function create(req, res) {
         sub.contactId = 2
     }
 
+    console.log(sub)
+
     try {
         await Subscription.create(sub)
         res.status(201).json('Created successfully!')
