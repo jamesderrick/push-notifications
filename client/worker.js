@@ -69,7 +69,8 @@ self.addEventListener('push', async (e) => {
         icon: 'logo.png',
         data: notification.data
     })
-    await self.navigator.setAppBadge();
+    console.log(notification.data.contacts.length)
+    await self.navigator.setAppBadge(1);
     const response = await fetch('api/nudges/received', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },
@@ -80,7 +81,7 @@ self.addEventListener('push', async (e) => {
 
 self.addEventListener("notificationclick", async (e) => {
     console.log('notification clicked')
-    await self.navigator.setAppBadge(0)
+    await self.navigator.clearAppBadge()
     const response = await fetch('api/nudges/acknowledged', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },
