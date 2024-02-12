@@ -69,7 +69,7 @@ self.addEventListener('push', async (e) => {
         icon: 'logo.png',
         data: notification.data
     })
-    await self.navigator.setAppBadge(notification.data.contacts.length);
+    await self.navigator.setAppBadge();
     const response = await fetch('api/nudges/received', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },
