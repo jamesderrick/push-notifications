@@ -62,6 +62,7 @@ self.addEventListener("activate", async (e) => {
 
 self.addEventListener('push', async (e) => {
     console.log('notification received')
+    await self.navigator.clearAppBadge()
     const notification = JSON.parse(e.data.text())
     notification.data = JSON.parse(notification.data)
     self.registration.showNotification(notification.title, {
@@ -69,6 +70,7 @@ self.addEventListener('push', async (e) => {
         icon: 'logo.png',
         data: notification.data
     })
+    await self.navigator.setAppBadge(1);
     const response = await fetch('api/nudges/received', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },
