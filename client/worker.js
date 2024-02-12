@@ -62,7 +62,6 @@ self.addEventListener("activate", async (e) => {
 
 self.addEventListener('push', async (e) => {
     console.log('notification received')
-    await self.navigator.clearAppBadge()
     const notification = JSON.parse(e.data.text())
     notification.data = JSON.parse(notification.data)
     self.registration.showNotification(notification.title, {
@@ -70,7 +69,7 @@ self.addEventListener('push', async (e) => {
         icon: 'logo.png',
         data: notification.data
     })
-    await self.navigator.setAppBadge(1);
+    await self.navigator.setAppBadge();
     const response = await fetch('api/nudges/received', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },
@@ -81,6 +80,7 @@ self.addEventListener('push', async (e) => {
 
 self.addEventListener("notificationclick", async (e) => {
     console.log('notification clicked')
+    await self.navigator.setAppBadge(0)
     const response = await fetch('api/nudges/acknowledged', {
         method: 'PATCH',
         headers: { 'Content-Type': "application/json" },

@@ -24,7 +24,7 @@ const requestNotificationPermission = async () => {
     } else {
         await registerSW()
         const notifyBtn = document.querySelector('.notify-btn');
-        notifyBtn.style.display = 'none';
+        notifyBtn.classList.add = 'hide-btn';
     }
 }
 

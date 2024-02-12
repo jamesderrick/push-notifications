@@ -3,10 +3,13 @@
 }
 
 .notif-btn {
-    display: none;
     padding: 15px;
     text-transform: uppercase;
     border-radius: 5px;
+}
+
+.hide-btn {
+    display: none !important;
 }
 
 @supports (-webkit-touch-callout: none) {
