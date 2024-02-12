@@ -24,7 +24,7 @@ async function create(req, res) {
         sub.contactId = 2
     }
 
-    console.log(sub)
+    console.log("New subscriptions for contact with id " + sub.contactId + " using " + sub.agent)
 
     try {
         await Subscription.create(sub)
