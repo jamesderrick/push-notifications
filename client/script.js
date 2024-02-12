@@ -23,6 +23,8 @@ const requestNotificationPermission = async () => {
         throw new Error("Notification permission not granted");
     } else {
         await registerSW()
+        const notifyBtn = document.querySelector('.notify-btn');
+        notifyBtn.style.display = 'none';
     }
 }
 
