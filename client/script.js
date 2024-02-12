@@ -22,7 +22,7 @@ const requestNotificationPermission = async () => {
     if(permission !== 'granted') {
         throw new Error("Notification permission not granted");
     } else {
-        await registerSW();
+        await registerSW()
     }
 }
 

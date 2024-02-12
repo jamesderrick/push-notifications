@@ -17,4 +17,12 @@ server.get('/api', (req, res) => {
     res.send('notification server up and running...')
 })
 
+server.get('/enable-notifications', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client', 'enable.html'))
+})
+
+server.get('/nudge', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client', 'nudge.html'))
+})
+
 module.exports = server;
