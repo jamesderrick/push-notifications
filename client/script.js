@@ -24,7 +24,9 @@ const requestNotificationPermission = async () => {
     } else {
         await registerSW()
         const notifyBtn = document.querySelector('.notify-btn');
-        notifyBtn.classList.add = 'hide-btn';
+        if(notifyBtn) {
+            notifyBtn.classList.add = 'hide-btn';
+        }
     }
 }
 
