@@ -27,7 +27,7 @@ async function send(req, res) {
                     title: req.body.title,
                     body: req.body.body,
                     data: JSON.stringify({
-                        id: nudge.nudgeId,
+                        id: nudge.nudge_id,
                         contacts: contacts
                     })
                 })).catch(err => {
