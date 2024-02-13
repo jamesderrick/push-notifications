@@ -13,6 +13,29 @@
     <h2>Home Page</h2>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore odio maiores, beatae cupiditate facilis aspernatur! Fugiat, est, modi reprehenderit possimus sit cumque iste iusto tempore amet reiciendis distinctio esse quidem.</p>
     <button class="notif-btn" onclick="requestNotificationPermission()">Enable notifications</button>
+    
+    <table class="nudges">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>REQUESTOR</th>
+                <th>RECIPIENT</th>
+                <th>RECEIVED</th>
+                <th>ACKNOWLEDGED</th>
+                <th>CONTACTS</th>
+                <th>Action</th>
+            </tr> 
+            <tbody>
+                <!-- POPULATED FROM API -->
+            </tbody>
+        </thead>
+    </table>
+    <br/>
+    <div>
+        <button onclick="sendAllNudges()" style="float:right; padding: 10px">Send All</button>
+    </div>
+    <button onclick="location.href = 'new-nudge'" style="padding:10px">Create New Nudge</button>
+
     <script src="script.js"></script>
 </body>
 </html>

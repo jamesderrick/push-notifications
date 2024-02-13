@@ -1,7 +1,54 @@
 const urlParams = new URLSearchParams(window.location.search);
 const nudgeId = urlParams.get('id')
 
-const getContacts = async (nudgeId) => {
+const getAllContacts = async () => {
+    const response = await fetch(`api/contacts`)
+    const contacts = await response.json();
+    return contacts
+}
+
+const getContactsDropdown = async () => {
+    const contacts = await getAllContacts()
+    const recipientDropdownField = document.querySelector('.recipient')
+    const requestorDropdownField = document.querySelector('.requestor')
+
+    contacts.forEach(contact => {
+        const option = document.createElement('option');
+        option.value = contact.contact_id
+        option.innerText = contact.email;
+        requestorDropdownField.appendChild(option)
+
+        const optionReciptient = document.createElement('option');
+        optionReciptient.value = contact.contact_id
+        optionReciptient.innerText = contact.email;
+        recipientDropdownField.appendChild(optionReciptient)
+    })
+}
+
+const getContactsCheckbox = async () => {
+    const contacts = await getAllContacts();
+    const checkboxField = document.querySelector('.contacts')
+
+    contacts.forEach(contact => {
+        const container = document.createElement('div');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox'
+        checkbox.id = 'contact-' + contact.contact_id
+        checkbox.name = 'contact'
+        checkbox.value = contact.contact_id
+        container.appendChild(checkbox)
+
+        const label = document.createElement('label');
+        label.setAttribute('for','contact-' + contact.contact_id)
+        label.textContent = contact.first_name + ' ' + contact.last_name
+        container.appendChild(label)
+
+        checkboxField.appendChild(container)
+    })
+}
+
+const getContactsByNudge = async (nudgeId) => {
     const response = await fetch(`api/nudges/contacts?id=${nudgeId}`)
     const contacts = await response.json()
 
@@ -23,4 +70,9 @@ const getContacts = async (nudgeId) => {
     });
 }
 
-getContacts(nudgeId)
+if(nudgeId) {
+    getContactsByNudge(nudgeId)
+} else {
+    getContactsDropdown()
+    getContactsCheckbox()
+}

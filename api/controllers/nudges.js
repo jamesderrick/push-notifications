@@ -1,6 +1,15 @@
 const Nudge = require('../models/Nudge');
 const Contact = require('../models/Contact');
 
+async function index(req, res) {
+    try {
+        const nudges = await Nudge.all;
+        res.status(200).json(nudges)
+    } catch (err) {
+        res.status(500).send(err);
+    }
+}
+
 async function contacts(req, res) {
     const nudgeId = req.query.id;
     try {
@@ -31,4 +40,4 @@ async function acknowledge(req, res) {
     }
 }
 
-module.exports = { contacts, received, acknowledge }
+module.exports = { index, contacts, received, acknowledge }

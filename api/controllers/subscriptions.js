@@ -13,10 +13,13 @@ async function index(req, res) {
 async function create(req, res) {
     const sub = req.body;
     sub.subscriptionId = crypto.randomBytes(16).toString("hex");
-    if(sub.endpoint.search('wns2-ln2p.notify.windows.com') > -1) {
+    if(sub.endpoint.search('updates.push.services.mozilla.com') > -1) {
+        sub.agent = 'firefox'
+        sub.contactId = 1
+    } else if(sub.endpoint.search('wns2-ln2p.notify.windows.com') > -1) {
         sub.agent = 'edge'
         sub.contactId = 3
-    } else if (sub.endpoint.search('https://fcm.googleapis.com') > -1) {
+    } else if (sub.endpoint.search('fcm.googleapis.com') > -1) {
         sub.agent = 'chrome'
         sub.contactId = 2
     } else {

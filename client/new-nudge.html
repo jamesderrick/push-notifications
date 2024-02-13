@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push Notifications | New Nudge</title>
+</head>
+<body>
+    <h1>Create New Nudge</h1>
+    <form method="POST" action="/new-nudge">
+        <label for="requestor">Requestor:</label><br>
+        <select id="requestor" name="requestor" class="requestor"></select>
+        <br><br>
+        <label for="recipient">Recipient:</label><br>
+        <select id="recipient" name="recipient" class="recipient">
+        </select>
+        <br><br>
+        <fieldset class="contacts">
+            <legend>Choose your contacts</legend>
+        </fieldset>
+        <br/>
+        <input type="submit" value="Submit">
+    </form>
+    <script src="nudge.js"></script>
+</body>
+</html>
