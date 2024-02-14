@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const Subscription = require('../models/Subscription');
+const Contact = require("../models/Contact");
 
 async function index(req, res) {
     try {
@@ -15,25 +16,38 @@ async function create(req, res) {
     sub.subscriptionId = crypto.randomBytes(16).toString("hex");
     if(sub.endpoint.search('updates.push.services.mozilla.com') > -1) {
         sub.agent = 'firefox'
-        sub.contactId = 1
     } else if(sub.endpoint.search('wns2-ln2p.notify.windows.com') > -1) {
         sub.agent = 'edge'
-        sub.contactId = 3
     } else if (sub.endpoint.search('fcm.googleapis.com') > -1) {
         sub.agent = 'chrome'
-        sub.contactId = 2
     } else {
         sub.agent = 'safari'
-        sub.contactId = 2
     }
 
-    console.log("New subscriptions for contact with id " + sub.contactId + " using " + sub.agent)
+    const currentUser = {
+        "username": req.session.account?.username,
+        "firstName": req.session.account?.name.split(' ')[0],
+        "lastName": req.session.account?.name.split(' ')[1]
+    }
 
-    try {
-        await Subscription.create(sub)
-        res.status(201).json('Created successfully!')
-    } catch (err) {
-        res.status(500),send(err)
+    if(currentUser){
+        let contact = await Contact.getByEmail(currentUser.username) 
+        if(!contact) {
+            await Contact.create(currentUser.firstName, currentUser.lastName, currentUser.username)
+            contact = await Contact.getByEmail(currentUser.username)
+        }
+        sub.contactId = contact.contact_id
+
+        console.log("New subscriptions for contact with id " + sub.contactId + " using " + sub.agent)
+
+        try {
+            await Subscription.create(sub)
+            res.status(201).json('Created successfully!')
+        } catch (err) {
+            res.status(500).send(err)
+        }
+    } else {
+        res.status(500).send('Cannot create subscription for unknown user')
     }
 }
 

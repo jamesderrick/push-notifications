@@ -1,3 +1,17 @@
+const checkAuthentication = async () => {
+    const response = await fetch('api/authenticated')
+    const result = await response.json()
+    return result
+}
+
+const renderDisplayName = (username) => {
+    const profile = document.querySelector('.profile')
+    profile.innerHTML = '';
+    const email = document.createElement('p')
+    email.innerText = 'Signed in as: ' + username;
+    profile.appendChild(email)
+}
+
 const checkPermission = () => {
     console.log('checking permissions')
     if(!('serviceWorker' in navigator)) {
@@ -115,8 +129,17 @@ const getNudges = async () => {
 }
 
 const main = async () => {
-    checkPermission()
-    await requestNotificationPermission()
+    const authentication = await checkAuthentication()
+    console.log(authentication)
+    if(authentication.authenticated) {
+        renderDisplayName(authentication.email)
+        checkPermission()
+        await requestNotificationPermission() 
+    } else {
+        window.location.href='/auth/signin'
+    }
+    //checkPermission()
+    //await requestNotificationPermission()
     //await registerSW()
 }
 

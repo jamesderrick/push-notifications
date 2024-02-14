@@ -9,10 +9,14 @@ const getAllContacts = async () => {
 
 const getContactsDropdown = async () => {
     const contacts = await getAllContacts()
+    console.log(contacts)
     const recipientDropdownField = document.querySelector('.recipient')
     const requestorDropdownField = document.querySelector('.requestor')
+    console.log(contacts.filter(contact => contact.type === 'owner'))
+    console.log(contacts.filter(contact => contact.type === 'contact'))
 
-    contacts.forEach(contact => {
+    contacts.filter(contact => contact.type === 'owner').forEach(contact => {
+        console.log(contact)
         const option = document.createElement('option');
         option.value = contact.contact_id
         option.innerText = contact.email;
@@ -29,7 +33,7 @@ const getContactsCheckbox = async () => {
     const contacts = await getAllContacts();
     const checkboxField = document.querySelector('.contacts')
 
-    contacts.forEach(contact => {
+    contacts.filter(contact => contact.type === 'contact').forEach(contact => {
         const container = document.createElement('div');
 
         const checkbox = document.createElement('input');

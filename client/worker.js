@@ -61,20 +61,23 @@ self.addEventListener("activate", async (e) => {
 self.addEventListener('push', async (e) => {
     console.log('notification received')
     const notification = JSON.parse(e.data.text())
-    notification.data = JSON.parse(notification.data)
+    if(notification.data) {
+        notification.data = JSON.parse(notification.data)
+    }
     self.registration.showNotification(notification.title, {
         body: notification.body,
         icon: 'logo.png',
-        data: notification.data
+        data: notification?.data
     })
-    console.log(notification)
-    console.log(notification.data.contacts.length)
+
     //await self.navigator.setAppBadge(1);
-    const response = await fetch('api/nudges/received', {
-        method: 'PATCH',
-        headers: { 'Content-Type': "application/json" },
-        body: JSON.stringify({ nudgeId: notification.data.id })
-    })
+    if(notification.data) {
+        const response = await fetch('api/nudges/received', {
+            method: 'PATCH',
+            headers: { 'Content-Type': "application/json" },
+            body: JSON.stringify({ nudgeId: notification.data.id })
+        })
+    }
     //console.log(response)
 })
 
@@ -82,24 +85,28 @@ self.addEventListener("notificationclick", async (e) => {
     console.log('notification clicked', e.notification)
     e.notification.close()
     //await self.navigator.clearAppBadge()
-    const response = await fetch('api/nudges/acknowledged', {
-        method: 'PATCH',
-        headers: { 'Content-Type': "application/json" },
-        body: JSON.stringify({ nudgeId: e.notification.data.id })
-    })
+    if(e.notification.data !== null) {
+        const response = await fetch('api/nudges/acknowledged', {
+            method: 'PATCH',
+            headers: { 'Content-Type': "application/json" },
+            body: JSON.stringify({ 
+                nudgeId: e.notification.data.id, 
+                requestorId: e.notification.data.requestorId
+            })
+        })
 
-    e.waitUntil(self.clients.claim().then(() => {
-        // See https://developer.mozilla.org/en-US/docs/Web/API/Clients/matchAll
-        return self.clients.matchAll({type: 'window'});
-      }).then(clients => {
-        console.log(clients)
-        return clients.map(client => {
-          // Check to make sure WindowClient.navigate() is supported.
-          if ('navigate' in client) {
-            return client.navigate(`nudge?id=${e.notification.data.id}`);
-          }
-        });
-      }));
+        e.waitUntil(self.clients.claim().then(() => {
+            // See https://developer.mozilla.org/en-US/docs/Web/API/Clients/matchAll
+            return self.clients.matchAll({type: 'window'});
+        }).then(clients => {
+            return clients.map(client => {
+            // Check to make sure WindowClient.navigate() is supported.
+            if ('navigate' in client) {
+                return client.navigate(`nudge?id=${e.notification.data.id}`);
+            }
+            });
+        }));
+    }
 
 })
 

@@ -1,5 +1,7 @@
 const Nudge = require('../models/Nudge');
 const Contact = require('../models/Contact');
+const Notification = require('../models/Notification');
+const Subscription = require('../models/Subscription');
 
 async function index(req, res) {
     try {
@@ -32,9 +34,14 @@ async function received(req, res) {
 
 async function acknowledge(req, res) {
     const nudgeId = req.body.nudgeId;
+    const requestorId = req.body.requestorId;
     try {
         await Nudge.acknowledged(nudgeId)
-        res.status(200).json('Nudge updated successfully!')
+        const subscriptions = await Subscription.getByContactId(requestorId)
+        subscriptions.forEach(async subscription => {
+            await Notification.acknowledged(subscription)
+        })
+        res.status(200).json('Nudge acknowledged successfully!')
     } catch (err) {
         res.status(500).send(err)
     }

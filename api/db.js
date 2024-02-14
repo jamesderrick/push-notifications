@@ -37,38 +37,29 @@ function createTables(db) {
         acknowledged BIT NOT NULL DEFAULT 0
     );
 
-    INSERT INTO nudges (requestor_id, recipient_id) VALUES (1,2);
-    INSERT INTO nudges (requestor_id, recipient_id) VALUES (1,3);
-
     CREATE TABLE nudge_contact (
         nudge_id INTEGER NOT NULL,
         contact_id INTEGER NOT NULL
     );
 
-    INSERT INTO nudge_contact (nudge_id, contact_id) VALUES (1, 5);
-    INSERT INTO nudge_contact (nudge_id, contact_id) VALUES (1, 6);
-    INSERT INTO nudge_contact (nudge_id, contact_id) VALUES (1, 7);
-    INSERT INTO nudge_contact (nudge_id, contact_id) VALUES (1, 8);
-    INSERT INTO nudge_contact (nudge_id, contact_id) VALUES (2, 9);
-    INSERT INTO nudge_contact (nudge_id, contact_id) VALUES (2, 10);
-
     CREATE TABLE contacts (
         contact_id INTEGER PRIMARY KEY AUTOINCREMENT,
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
-        email TEXT NOT NULL
+        email TEXT NOT NULL,
+        type TEXT NOT NULL
     );
 
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Stan','Greaves','stan.greaves@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Jim','Collins','jim.collins@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Bob','Santiago','bob.santiago@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Clare','Sparrow','clare.sparrow@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Greta','Shaw','greta.shaw@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Chris','Redfield','chris.redfield@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('John','Jones','john.jones@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Kim','Yung','kim.yung@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Harry','Hall','harry.hill@test.com');
-    INSERT INTO contacts (first_name, last_name, email) VALUES ('Susan','Leadbetter','susan.leadbetter@test.com');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Stan','Greaves','stan.greaves@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Jim','Collins','jim.collins@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Bob','Santiago','bob.santiago@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Clare','Sparrow','clare.sparrow@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Greta','Shaw','greta.shaw@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Chris','Redfield','chris.redfield@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('John','Jones','john.jones@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Kim','Yung','kim.yung@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Harry','Hall','harry.hill@test.com','contact');
+    INSERT INTO contacts (first_name, last_name, email, type) VALUES ('Susan','Leadbetter','susan.leadbetter@test.com','contact');
 
     `);
 }
