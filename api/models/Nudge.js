@@ -10,8 +10,10 @@ class Nudge {
                         c.first_name || ' ' || c.last_name as requestor,
                         recipient_id,
                         c1.first_name || ' ' || c1.last_name as recipient,
-                        received, 
+                        received,
+                        received_timestamp, 
                         acknowledged,
+                        acknowledged_timestamp,
                         group_concat(c2.first_name || ' ' || c2.last_name,',') as contacts
                 FROM nudges n
                 INNER JOIN contacts c on n.requestor_id = c.contact_id
@@ -101,9 +103,11 @@ class Nudge {
     }
 
     static received(nudgeId) {
+        const timestamp = new Date()
         return db.run(
-            `UPDATE nudges SET received = 1 WHERE nudge_id = ?`,
+            `UPDATE nudges SET received = 1, received_timestamp = ? WHERE nudge_id = ?`,
                 [
+                    timestamp,
                     nudgeId
                 ],
                 (error) => {
@@ -115,9 +119,11 @@ class Nudge {
     }
 
     static acknowledged(nudgeId) {
+        const timestamp = new Date()
         return db.run(
-            `UPDATE nudges SET acknowledged = 1 WHERE nudge_id = ?`,
+            `UPDATE nudges SET acknowledged = 1, acknowledged_timestamp = ? WHERE nudge_id = ?`,
                 [
+                    timestamp,
                     nudgeId
                 ],
                 (error) => {

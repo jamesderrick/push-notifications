@@ -34,7 +34,9 @@ function createTables(db) {
         requestor_id INTEGER NOT NULL,
         recipient_id INTEGER NOT NULL,
         received BIT NOT NULL DEFAULT 0,
-        acknowledged BIT NOT NULL DEFAULT 0
+        received_timestamp DATETIME NULL,
+        acknowledged BIT NOT NULL DEFAULT 0,
+        acknowledged_timestamp DATETIME NULL
     );
 
     CREATE TABLE nudge_contact (

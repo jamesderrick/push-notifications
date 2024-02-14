@@ -65,26 +65,12 @@ const sendAllNudges = async () => {
 }
 
 const getNudges = async () => {
+    const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
     const response = await fetch('api/nudges')
     const nudges = await response.json()
 
     const nudgeResults = document.querySelector('.nudges tbody');
     nudges.forEach(nudge => {
-
-        let browser = '';
-        switch(nudge.recipient_id) {
-            case 1:
-                browser = ' (Firefox)'
-                break;
-            case 2:
-                browser = ' (Chrome)'
-                break;
-            case 3:
-                browser = ' (Edge)'
-                break;
-            default:
-                console.log('someone else')
-        }
 
         const nudgeRow = document.createElement('tr');
         const nudgeId = document.createElement('td');
@@ -94,13 +80,13 @@ const getNudges = async () => {
         requested.innerText = nudge.requestor
 
         const recipient = document.createElement('td');
-        recipient.innerText = nudge.recipient + browser
+        recipient.innerText = nudge.recipient
 
         const received = document.createElement('td');
-        received.innerText = nudge.received === 1 ? 'YES' : 'NO';
+        received.innerText = nudge.received === 1 ? new Date(nudge.received_timestamp).toLocaleDateString('en-GB', dateOptions) : 'NO';
 
         const acknowledged = document.createElement('td');
-        acknowledged.innerText = nudge.acknowledged === 1 ? 'YES' : 'NO';
+        acknowledged.innerText = nudge.acknowledged === 1 ? new Date(nudge.acknowledged_timestamp).toLocaleDateString('en-GB', dateOptions) : 'NO';
 
         const contacts = document.createElement('td');
         let contactsHTML = '';
