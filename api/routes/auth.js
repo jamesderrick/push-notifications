@@ -11,7 +11,7 @@ const { REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } = require('../authConfig');
 const router = express.Router();
 
 router.get('/signin', authProvider.login({
-    scopes: ['26c3f5c0-2a80-4ca1-b814-3e819799b996'],
+    scopes: [],
     redirectUri: REDIRECT_URI,
     successRedirect: '/'
 }));
