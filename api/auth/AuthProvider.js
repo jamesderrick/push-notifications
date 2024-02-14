@@ -15,6 +15,8 @@ class AuthProvider {
     login(options = {}) {
         return async (req, res, next) => {
 
+            console.log(req.body)
+
             /**
              * MSAL Node library allows you to pass your custom state as state parameter in the Request object.
              * The state parameter can also be used to encode information of the app's state before redirect.
@@ -180,6 +182,7 @@ class AuthProvider {
      * @returns 
      */
     getMsalInstance(msalConfig) {
+        console.log(msalConfig)
         return new msal.ConfidentialClientApplication(msalConfig);
     }
 

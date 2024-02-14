@@ -16,6 +16,9 @@ const msalConfig = {
         authority: process.env.CLOUD_INSTANCE + process.env.TENANT_ID, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
         clientSecret: process.env.CLIENT_SECRET // Client secret generated from the app registration in Azure portal
     },
+    cache: {
+        cacheLocation: "localStorage"
+    },
     system: {
         loggerOptions: {
             loggerCallback(loglevel, message, containsPii) {
